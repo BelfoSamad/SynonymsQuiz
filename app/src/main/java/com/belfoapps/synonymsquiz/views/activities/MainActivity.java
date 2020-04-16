@@ -1,5 +1,6 @@
 package com.belfoapps.synonymsquiz.views.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,12 +15,15 @@ import com.belfoapps.synonymsquiz.R;
 import com.belfoapps.synonymsquiz.contracts.MainContract;
 import com.belfoapps.synonymsquiz.pojo.Synonym;
 import com.belfoapps.synonymsquiz.presenters.MainPresenter;
+import com.google.android.gms.ads.AdView;
 
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.view.View.GONE;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
     /**************************************** Declarations ****************************************/
@@ -34,11 +38,18 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     Button option_2;
     @BindView(R.id.loading)
     ProgressBar loading;
+    @BindView(R.id.adView)
+    AdView ad;
 
     /**************************************** Click Listeners *************************************/
     @OnClick(R.id.saved_synonyms)
     public void goToSynonyms() {
         startActivity(new Intent(MainActivity.this, SynonymsActivity.class));
+    }
+
+    @OnClick(R.id.home)
+    public void goToHome() {
+        onBackPressed();
     }
 
     @OnClick({R.id.option_1, R.id.option_2})
@@ -48,11 +59,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             ((Button) v).setTextColor(getResources().getColor(R.color.answerButtonTextColor));
         } else {
             v.setBackground(getResources().getDrawable(R.drawable.button_wrong));
+            ((Button) v).setTextColor(getResources().getColor(R.color.answerButtonTextColor));
             mPresenter.saveSynonym(synonym);
         }
 
         loading.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(() -> mPresenter.getSynonym(), 1000);
+        new Handler().postDelayed(() -> mPresenter.getSynonym(getIntent().getBooleanExtra("offline", true)), 1000);
     }
 
     /**************************************** Essential Methods ***********************************/
@@ -71,17 +83,45 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         initUI();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ad.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ad.destroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ad.resume();
+    }
+
     /**************************************** Methods *********************************************/
     @Override
     public void initUI() {
         //First Synonym
         loading.setVisibility(View.VISIBLE);
-        mPresenter.getSynonym();
+        mPresenter.getSynonym(getIntent().getBooleanExtra("offline", true));
     }
 
     @Override
+    public void initAdBanner() {
+        if (getResources().getBoolean(R.bool.AD_BANNER_Enabled)) {
+            mPresenter.loadAd(ad);
+        } else {
+            ad.setVisibility(GONE);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
     public void nextSynonym(Synonym synonym, String wrong_answer) {
-        loading.setVisibility(View.GONE);
+        loading.setVisibility(GONE);
 
         this.synonym = synonym;
 
@@ -92,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         Random rn = new Random();
 
-        synonym_text.setText("What is the Synonym of " + synonym.getWord());
+        synonym_text.setText(getResources().getString(R.string.loading_words) + " " + synonym.getWord());
         if (rn.nextBoolean()) {
             option_1.setText(synonym.getSynonym());
             option_2.setText(wrong_answer);

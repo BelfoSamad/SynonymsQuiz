@@ -6,6 +6,9 @@ public class Synonym {
     private String word;
     private String synonym;
 
+    public Synonym() {
+    }
+
     public Synonym(String word, String synonym) {
         this.word = word;
         this.synonym = synonym;

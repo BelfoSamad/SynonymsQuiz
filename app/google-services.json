@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "59089064623",
+    "firebase_url": "https://synonymsquiz-dbe8f.firebaseio.com",
+    "project_id": "synonymsquiz-dbe8f",
+    "storage_bucket": "synonymsquiz-dbe8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59089064623:android:e937a8ce081f135e3ffa5a",
+        "android_client_info": {
+          "package_name": "com.belfoapps.synonymsquiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59089064623-tqiecb33da8o4llbpjm37cdnhlvqt2ah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUZE30cEbA5LH4gP7yMmsHw7YKsy9Talw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59089064623-tqiecb33da8o4llbpjm37cdnhlvqt2ah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

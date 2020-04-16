@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.12.4'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+repositories {
+    maven { url 'https://maven.google.com' }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 def ButterKnifeVersion = '10.2.1'
 
 android {
@@ -13,6 +28,11 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders = [
+                onesignal_app_id: '63d9eb22-bb95-4528-b26d-b624f19ce33c',
+                onesignal_google_project_number: 'REMOTE'
+        ]
     }
 
     buildTypes {
@@ -38,6 +58,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    //Multidex
+    implementation 'androidx.multidex:multidex:2.0.1'
+
     //Material Design
     implementation 'com.google.android.material:material:1.2.0-alpha05'
 
@@ -48,5 +71,17 @@ dependencies {
     //Gson
     implementation 'com.google.code.gson:gson:2.8.6'
 
+    //Firebase
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+    implementation 'com.google.firebase:firebase-firestore:21.4.2'
+    implementation 'com.google.firebase:firebase-messaging:20.1.5'
 
+    //One Signal
+    implementation 'com.onesignal:OneSignal:3.13.0'
+
+    //Admob
+    implementation 'com.google.android.gms:play-services-ads:19.0.1'
+
+    //Consent "GDPR"
+    implementation 'com.google.android.ads.consent:consent-library:1.0.8'
 }

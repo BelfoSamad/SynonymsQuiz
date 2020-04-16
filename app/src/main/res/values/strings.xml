@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">SynonymsQuiz</string>
+    <string name="APPLICATION_ID">ca-app-pub-2106508532272950~7395652718</string>
+    <string name="ADMOB_BANNER_ID">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="PUBLISHER_ID">pub-4679171106713552</string>
+    <item name="GDPR_Enabled" type="bool">true</item>
+    <item name="AD_BANNER_Enabled" type="bool">true</item>
+    <item name="OFFLINE_Enabled" type="bool">true</item>
+
+    <!-- Content -->
+    <string name="start">Start</string>
+    <string name="loading_words">What is the Synonym Of </string>
+    <string name="word">Synonym</string>
 </resources>

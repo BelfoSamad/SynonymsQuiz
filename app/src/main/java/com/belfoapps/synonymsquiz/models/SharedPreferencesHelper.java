@@ -14,6 +14,7 @@ import java.util.Arrays;
 public class SharedPreferencesHelper {
     private static final String DARK_MODE = "Dark Mode";
     private static final String SYNONYM = "Synonym";
+    private static final String PERSONALIZED_ADS = "Personalized Ads";
 
     /************************************* Declarations *******************************************/
     private SharedPreferences sharedPref;
@@ -70,15 +71,15 @@ public class SharedPreferencesHelper {
 
 
     /************************************* Extra Methods ******************************************/
-    //Dark Mode
-    public void setDarkModeEnable(boolean isEnabled) {
+    //Ad Personalization
+    public void setAdPersonalized(boolean isPersonalized) {
         SharedPreferences.Editor editor;
         editor = sharedPref.edit();
-        editor.putBoolean(DARK_MODE, isEnabled).apply();
+        editor.putBoolean(PERSONALIZED_ADS, isPersonalized).apply();
     }
 
-    public boolean isDarkModeEnabled() {
-        return sharedPref.getBoolean(DARK_MODE, false);
+    public boolean isAdPersonalized() {
+        return sharedPref.getBoolean(PERSONALIZED_ADS, false);
     }
 
 }

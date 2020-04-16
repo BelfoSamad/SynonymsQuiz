@@ -3,9 +3,11 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="primaryTextColor">#FFFFFF</color>
+    <color name="secondaryTextColor">#03DAC5</color>
 
-    <color name="primaryTextColor">#000000</color>
-    <color name="secondaryTextColor">#AAAAAA</color>
+    <!-- Content Colors -->
     <color name="buttonTextColor">#000000</color>
     <color name="answerButtonTextColor">#FFFFFF</color>
+    <color name="startTextColor">#FFFFFF</color>
 </resources>

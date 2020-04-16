@@ -1,8 +1,11 @@
 package com.belfoapps.synonymsquiz.views.activities;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -61,7 +64,15 @@ public class SynonymsActivity extends AppCompatActivity implements SynonymsContr
         mAdapter = new SynonymsAdapter(synonyms);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        //mRecyclerView.addItemDecoration(new RecipesItemDecoration());
+        mRecyclerView.addItemDecoration(new RecipesItemDecoration());
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private static class RecipesItemDecoration extends RecyclerView.ItemDecoration {
+        @Override
+        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+            outRect.bottom = 24;
+        }
     }
 }

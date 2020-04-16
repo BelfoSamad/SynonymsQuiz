@@ -20,21 +20,10 @@ public class StartActivity extends AppCompatActivity implements StartContract.Vi
     /**************************************** Declarations ****************************************/
     private StartPresenter mPresenter;
     /**************************************** View Declarations ***********************************/
-    //Drawer Menu
-    @BindView(R.id.drawer_layout)
-    public DrawerLayout mDrawerLayout;
-    @BindView(R.id.nav_view)
-    NavigationView mNavigationView;
-
     /**************************************** Click Listeners *************************************/
     @OnClick(R.id.start)
     public void start() {
-        startActivity(new Intent(StartActivity.this, MainActivity.class));
-    }
-
-    @OnClick(R.id.menu)
-    public void openDrawer() {
-        mDrawerLayout.openDrawer(GravityCompat.START);
+        mPresenter.goToMain();
     }
 
     /**************************************** Essential Methods ***********************************/
@@ -50,24 +39,11 @@ public class StartActivity extends AppCompatActivity implements StartContract.Vi
         mPresenter = new StartPresenter(this);
 
         //init UI
-        initUI();
     }
 
     /**************************************** Methods *********************************************/
     @Override
     public void initUI() {
-        mNavigationView.setItemIconTintList(null);
-        mNavigationView.setNavigationItemSelectedListener(item -> {
-
-            int id = item.getItemId();
-
-            switch (id) {
-
-            }
-
-            // close drawer when item is tapped
-            mDrawerLayout.closeDrawers();
-            return true;
-        });
+        //Add Code Here
     }
 }
