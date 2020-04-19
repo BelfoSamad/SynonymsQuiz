@@ -4,6 +4,7 @@
     <string name="AD_BANNER_ID">ca-app-pub-3940256099942544/6300978111</string>
     <string name="INTERSTITIAL_AD_ID">ca-app-pub-3940256099942544/1033173712</string>
     <string name="PUBLISHER_ID">pub-4679171106713552</string>
+    <string name="privacy_link">www.privacy.com</string>
     <item name="GDPR_Enabled" type="bool">false</item>
     <string name="gdpr_msg">GDPR isn\'t required in your country</string>
     <string name="request_gdpr">Request GDPR</string>
@@ -15,13 +16,11 @@
     <!-- Developer Info -->
     <string name="developer_name">ss</string>
     <string name="developer_email">email</string>
-
     <!-- Menu -->
     <string name="rate_app">Rate The App</string>
     <string name="check_apps">Check Other Apps</string>
     <string name="feedback">Your Feedback</string>
     <string name="email_client">No Email client</string>
-
     <!-- Content -->
     <string name="start">Start</string>
     <string name="loading_words">What is the Synonym Of </string>
