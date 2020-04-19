@@ -2,8 +2,12 @@ package com.belfoapps.synonymsquiz.views.activities;
 
 import android.content.Intent;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SynonymsActivity extends AppCompatActivity implements SynonymsContract.View {
+    private static final String TAG = "SynonymsActivity";
     /**************************************** Declarations ****************************************/
     private SynonymsPresenter mPresenter;
     private SynonymsAdapter mAdapter;
@@ -30,11 +35,13 @@ public class SynonymsActivity extends AppCompatActivity implements SynonymsContr
     /**************************************** View Declarations ***********************************/
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
+    @BindView(R.id.back)
+    ImageButton back;
 
     /**************************************** Click Listeners *************************************/
     @OnClick(R.id.back)
     public void goBack() {
-        startActivity(new Intent(SynonymsActivity.this, StartActivity.class));
+        onBackPressed();
     }
 
     /**************************************** Essential Methods ***********************************/
@@ -54,7 +61,26 @@ public class SynonymsActivity extends AppCompatActivity implements SynonymsContr
     }
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SynonymsActivity.this, StartActivity.class));
+    }
+
+    @Override
     public void initUI() {
+        //When Right to left
+        LayerDrawable layerDrawable = (LayerDrawable) getResources()
+                .getDrawable(R.drawable.back);
+
+        Drawable left = getResources().getDrawable(R.drawable.icon_holder_left);
+        Drawable right = getResources().getDrawable(R.drawable.icon_holder_right);
+
+        if (getResources().getBoolean(R.bool.is_right_to_left)) {
+            layerDrawable.setDrawableByLayerId(R.id.back_drawable, left);
+        } else {
+            layerDrawable.setDrawableByLayerId(R.id.back_drawable, right);
+        }
+        back.setBackground(layerDrawable);
+
         mPresenter.initRecyclerView();
     }
 

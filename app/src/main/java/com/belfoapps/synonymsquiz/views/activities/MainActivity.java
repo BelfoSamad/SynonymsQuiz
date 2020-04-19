@@ -2,10 +2,13 @@ package com.belfoapps.synonymsquiz.views.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,6 +29,7 @@ import butterknife.OnClick;
 import static android.view.View.GONE;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
+    private static final String TAG = "MainActivity";
     /**************************************** Declarations ****************************************/
     private MainPresenter mPresenter;
     private Synonym synonym = null;
@@ -40,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     ProgressBar loading;
     @BindView(R.id.adView)
     AdView ad;
+    @BindView(R.id.saved_synonyms)
+    ImageButton saved_synonym;
+    @BindView(R.id.home)
+    ImageButton home;
 
     /**************************************** Click Listeners *************************************/
     @OnClick(R.id.saved_synonyms)
@@ -64,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         }
 
         loading.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(() -> mPresenter.getSynonym(getIntent().getBooleanExtra("offline", true)), 1000);
+        new Handler().postDelayed(() -> mPresenter.getSynonyms(getIntent().getBooleanExtra("offline", true)), 1000);
     }
 
     /**************************************** Essential Methods ***********************************/
@@ -79,7 +87,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         //init Main Presenter
         mPresenter = new MainPresenter(this);
 
-        //init UI:
+        //Init Ad Banner
+        initAdBanner();
+
+        //init UI
         initUI();
     }
 
@@ -104,9 +115,28 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     /**************************************** Methods *********************************************/
     @Override
     public void initUI() {
+        //When Right To Left
+        LayerDrawable ld1 = (LayerDrawable) getResources()
+                .getDrawable(R.drawable.home);
+        LayerDrawable ld2 = (LayerDrawable) getResources()
+                .getDrawable(R.drawable.synonyms);
+
+        Drawable left = getResources().getDrawable(R.drawable.icon_holder_left);
+        Drawable right = getResources().getDrawable(R.drawable.icon_holder_right);
+
+        if (getResources().getBoolean(R.bool.is_right_to_left)) {
+            ld1.setDrawableByLayerId(R.id.home_drawable, left);
+            ld2.setDrawableByLayerId(R.id.synonym_drawable, right);
+        } else {
+            ld1.setDrawableByLayerId(R.id.home_drawable, right);
+            ld2.setDrawableByLayerId(R.id.synonym_drawable, left);
+        }
+        home.setBackground(ld1);
+        saved_synonym.setBackground(ld2);
+
         //First Synonym
         loading.setVisibility(View.VISIBLE);
-        mPresenter.getSynonym(getIntent().getBooleanExtra("offline", true));
+        mPresenter.getSynonyms(getIntent().getBooleanExtra("offline", true));
     }
 
     @Override
@@ -140,5 +170,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             option_1.setText(wrong_answer);
             option_2.setText(synonym.getSynonym());
         }
+
+        mPresenter.showInterstitialAd();
     }
 }

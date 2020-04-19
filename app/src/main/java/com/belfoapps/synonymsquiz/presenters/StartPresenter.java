@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.belfoapps.synonymsquiz.R;
@@ -13,9 +14,10 @@ import com.belfoapps.synonymsquiz.utils.GDPR;
 import com.belfoapps.synonymsquiz.views.activities.MainActivity;
 import com.belfoapps.synonymsquiz.views.activities.StartActivity;
 import com.google.ads.consent.ConsentForm;
-import com.google.android.gms.ads.AdView;
+import com.google.ads.consent.ConsentInformation;
 
 public class StartPresenter implements StartContract.Presenter {
+    private static final String TAG = "StartPresenter";
     /**************************************** Declarations ****************************************/
     private StartActivity mView;
     private GDPR gdpr;
@@ -49,6 +51,16 @@ public class StartPresenter implements StartContract.Presenter {
         if (mView.getResources().getBoolean(R.bool.GDPR_Enabled)) {
             gdpr.checkForConsent();
         }
+    }
+
+    @Override
+    public void requestGDPR() {
+        if (ConsentInformation.getInstance(mView)
+                .isRequestLocationInEeaOrUnknown()) {
+            Log.d(TAG, "requestGDPR");
+            gdpr.requestConsent();
+        } else
+            Toast.makeText(mView, mView.getResources().getString(R.string.gdpr_msg), Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -8,6 +8,8 @@ public interface StartContract {
 
         void checkGDPRConsent();
 
+        void requestGDPR();
+
         boolean checkNetwork();
 
         void goToMain();

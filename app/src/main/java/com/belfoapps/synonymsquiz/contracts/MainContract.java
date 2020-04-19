@@ -4,6 +4,7 @@ import com.belfoapps.synonymsquiz.base.BasePresenter;
 import com.belfoapps.synonymsquiz.base.BaseView;
 import com.belfoapps.synonymsquiz.pojo.Synonym;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 public interface MainContract {
 
@@ -11,9 +12,13 @@ public interface MainContract {
 
         void loadAd(AdView ad);
 
-        void getSynonymsJsonFile();
+        void loadInterstitialAd();
 
-        void getSynonym(boolean offline);
+        void showInterstitialAd();
+
+        void getSynonymJsonFile();
+
+        void getSynonyms(boolean offline);
 
         void saveSynonym(Synonym syn);
 

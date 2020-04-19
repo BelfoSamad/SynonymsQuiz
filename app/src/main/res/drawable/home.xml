@@ -3,7 +3,7 @@
     android:opacity="opaque">
 
     <!-- The background color, preferably the same as your normal theme -->
-    <item android:drawable="@drawable/icon_holder_right"/>
+    <item android:id="@+id/home_drawable" android:drawable="@drawable/icon_holder_right"/>
 
     <item android:gravity="center"
         android:drawable="@drawable/home_icon"/>

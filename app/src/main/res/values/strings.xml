@@ -1,14 +1,30 @@
 <resources>
     <string name="app_name">SynonymsQuiz</string>
     <string name="APPLICATION_ID">ca-app-pub-2106508532272950~7395652718</string>
-    <string name="ADMOB_BANNER_ID">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="AD_BANNER_ID">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="INTERSTITIAL_AD_ID">ca-app-pub-3940256099942544/1033173712</string>
     <string name="PUBLISHER_ID">pub-4679171106713552</string>
-    <item name="GDPR_Enabled" type="bool">true</item>
-    <item name="AD_BANNER_Enabled" type="bool">true</item>
-    <item name="OFFLINE_Enabled" type="bool">true</item>
+    <item name="GDPR_Enabled" type="bool">false</item>
+    <string name="gdpr_msg">GDPR isn\'t required in your country</string>
+    <string name="request_gdpr">Request GDPR</string>
+    <item name="AD_BANNER_Enabled" type="bool">false</item>
+    <item name="INTERSTITIAL_AD_Enabled" type="bool">false</item>
+    <item name="SHOW_INTERSTITIAL_AD_AFTER" type="integer">3</item>
+    <item name="OFFLINE_Enabled" type="bool">false</item>
+
+    <!-- Developer Info -->
+    <string name="developer_name">ss</string>
+    <string name="developer_email">email</string>
+
+    <!-- Menu -->
+    <string name="rate_app">Rate The App</string>
+    <string name="check_apps">Check Other Apps</string>
+    <string name="feedback">Your Feedback</string>
+    <string name="email_client">No Email client</string>
 
     <!-- Content -->
     <string name="start">Start</string>
     <string name="loading_words">What is the Synonym Of </string>
     <string name="word">Synonym</string>
+    <string name="saved_synonyms">Saved Synonyms</string>
 </resources>

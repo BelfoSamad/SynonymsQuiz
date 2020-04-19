@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#f1c40f</color>
+    <color name="colorPrimaryDark">#f1c40f</color>
+    <color name="colorAccent">#0F3CF1</color>
     <color name="primaryTextColor">#FFFFFF</color>
-    <color name="secondaryTextColor">#03DAC5</color>
+    <color name="secondaryTextColor">#FFFFFF</color>
+    <color name="menuBackground">#FFFFFF</color>
 
     <!-- Content Colors -->
     <color name="buttonTextColor">#000000</color>

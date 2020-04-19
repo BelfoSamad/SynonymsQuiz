@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/gdpr"
+        android:title="@string/request_gdpr" />
+    <item
+        android:id="@+id/rate"
+        android:title="@string/rate_app" />
+    <item
+        android:id="@+id/others"
+        android:title="@string/check_apps" />
+    <item
+        android:id="@+id/feedback"
+        android:title="@string/feedback" />
+</menu>

@@ -79,7 +79,7 @@ public class GDPR {
         });
     }
 
-    private void requestConsent() {
+    public void requestConsent() {
         Log.d(TAG, "requestConsent: Requesting Consent");
         URL privacyUrl = null;
         try {

@@ -2,13 +2,17 @@ package com.belfoapps.synonymsquiz.presenters;
 
 import android.util.Log;
 
+import com.belfoapps.synonymsquiz.R;
 import com.belfoapps.synonymsquiz.contracts.MainContract;
 import com.belfoapps.synonymsquiz.models.SharedPreferencesHelper;
 import com.belfoapps.synonymsquiz.pojo.Synonym;
 import com.belfoapps.synonymsquiz.utils.GDPR;
 import com.belfoapps.synonymsquiz.views.activities.MainActivity;
 import com.google.ads.consent.ConsentForm;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
@@ -28,6 +32,8 @@ public class MainPresenter implements MainContract.Presenter {
     private GDPR gdpr;
     private ConsentForm form;
     private FirebaseFirestore mDb;
+    private InterstitialAd mInterstitialAd;
+    private int count;
 
     /***************************************** Constructor ****************************************/
     public MainPresenter(MainActivity mView) {
@@ -36,7 +42,9 @@ public class MainPresenter implements MainContract.Presenter {
         mDb = FirebaseFirestore.getInstance();
         gdpr = new GDPR(mSharedPrefs, form, mView);
 
-        getSynonymsJsonFile();
+        count = 0;
+
+        getSynonymJsonFile();
         attach(mView);
     }
 
@@ -67,7 +75,60 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void getSynonymsJsonFile() {
+    public void loadInterstitialAd() {
+        mInterstitialAd = new InterstitialAd(mView);
+        mInterstitialAd.setAdUnitId(mView.getResources().getString(R.string.INTERSTITIAL_AD_ID));
+
+        if (mView.getResources().getBoolean(R.bool.INTERSTITIAL_AD_Enabled)) {
+            if (mSharedPrefs.isAdPersonalized())
+                gdpr.loadPersonalizedInterstitialAd(mInterstitialAd);
+            else gdpr.loadNonPersonalizedInterstitialAd(mInterstitialAd);
+
+            mInterstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    mInterstitialAd.show();
+                }
+
+                @Override
+                public void onAdFailedToLoad(int errorCode) {
+                    // Code to be executed when an ad request fails.
+                }
+
+                @Override
+                public void onAdOpened() {
+                    // Code to be executed when the ad is displayed.
+                }
+
+                @Override
+                public void onAdClicked() {
+                    // Code to be executed when the user clicks on an ad.
+                }
+
+                @Override
+                public void onAdLeftApplication() {
+                    // Code to be executed when the user has left the app.
+                }
+
+                @Override
+                public void onAdClosed() {
+                }
+            });
+        }
+    }
+
+    @Override
+    public void showInterstitialAd() {
+        if (count < mView.getResources().getInteger(R.integer.SHOW_INTERSTITIAL_AD_AFTER))
+            count++;
+        else {
+            loadInterstitialAd();
+            count = 0;
+        }
+    }
+
+    @Override
+    public void getSynonymJsonFile() {
         try {
             jsonArray = new JSONArray(mSharedPrefs.getJsonFileFromAssets("synonyms.json"));
         } catch (JSONException e) {
@@ -76,8 +137,9 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void getSynonym(boolean offline) {
+    public void getSynonyms(boolean offline) {
         if (offline) {
+            //Offline Mode
             try {
                 int ran1 = new Random().nextInt(jsonArray.length() - 1);
                 int ran2 = new Random().nextInt(jsonArray.length() - 1);
@@ -93,6 +155,7 @@ public class MainPresenter implements MainContract.Presenter {
                 e.printStackTrace();
             }
         } else {
+            //Get Synonyms from Firebase
             mDb.collection("synonyms")
                     .get()
                     .addOnCompleteListener(task -> {
@@ -103,7 +166,7 @@ public class MainPresenter implements MainContract.Presenter {
                                 ran2 = new Random().nextInt(task.getResult().getDocuments().size() - 1);
                             mView.nextSynonym(Objects.requireNonNull(task.getResult().getDocuments().get(ran1).toObject(Synonym.class)),
                                     (String) task.getResult().getDocuments().get(ran2).get("word"));
-                        } else getSynonym(true);
+                        } else getSynonyms(true);
                     });
         }
     }
